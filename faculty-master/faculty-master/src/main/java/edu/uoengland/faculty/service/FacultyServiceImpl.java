@@ -1,0 +1,99 @@
+package edu.uoengland.faculty.service;
+
+
+import edu.uoengland.faculty.dto.FacultyDTO;
+import edu.uoengland.faculty.entity.Faculty;
+import edu.uoengland.faculty.repository.FacultyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class FacultyServiceImpl implements FacultyService {
+
+	@Autowired
+	private FacultyRepository facultyRepository;
+
+	@Override
+	public FacultyDTO saveFaculty(FacultyDTO facultyDTO) {
+
+		Faculty faculty = new Faculty();
+
+		faculty.setId(facultyDTO.getId());
+		faculty.setFullName(facultyDTO.getFullName());
+		faculty.setAddress(facultyDTO.getAddress());
+		faculty.setPhoneNumber(facultyDTO.getPhoneNumber());
+		faculty.setEmailAddress(facultyDTO.getEmailAddress());
+
+		Faculty facultyDB = facultyRepository.save(faculty);
+
+		facultyDTO.setId(facultyDB.getId());
+
+		return facultyDTO;
+	}
+
+	@Override
+	public List<FacultyDTO> getAllFacultys() {
+
+		List<Faculty> facultyList = facultyRepository.findAll();
+
+		List<FacultyDTO> facultyDTOList = new ArrayList<FacultyDTO>();
+
+		for(Faculty faculty: facultyList){
+
+			FacultyDTO facultyDTO = new FacultyDTO();
+
+			facultyDTO.setId(faculty.getId());
+			facultyDTO.setFullName(faculty.getFullName());
+			facultyDTO.setAddress(faculty.getAddress());
+			facultyDTO.setPhoneNumber(faculty.getPhoneNumber());
+			facultyDTO.setEmailAddress(faculty.getEmailAddress());
+
+			facultyDTOList.add(facultyDTO);
+		}
+
+		return facultyDTOList;
+	}
+
+	@Override
+	public FacultyDTO getAFaculty(UUID id) {
+
+		Faculty faculty = facultyRepository.findById(id).get();
+
+		FacultyDTO facultyDTO = new FacultyDTO();
+
+		facultyDTO.setId(faculty.getId());
+		facultyDTO.setFullName(faculty.getFullName());
+		facultyDTO.setAddress(faculty.getAddress());
+		facultyDTO.setPhoneNumber(faculty.getPhoneNumber());
+		facultyDTO.setEmailAddress(faculty.getEmailAddress());
+
+		return facultyDTO;
+	}
+
+	@Override
+	public String updateFaculty(FacultyDTO facultyDTO, UUID id) {
+
+		Faculty faculty = facultyRepository.findById(id).get();
+
+		faculty.setFullName(facultyDTO.getFullName());
+		faculty.setAddress(facultyDTO.getAddress());
+		faculty.setPhoneNumber(facultyDTO.getPhoneNumber());
+		faculty.setEmailAddress(facultyDTO.getEmailAddress());
+		facultyRepository.save(faculty);
+
+		return "The Faculty has been successfully updated";
+	}
+
+	@Override
+	public String deleteFaculty(UUID id) {
+
+		facultyRepository.deleteById(id);
+
+		return "The Faculty object with ID " + id + " has been successfully deleted";
+	}
+
+}

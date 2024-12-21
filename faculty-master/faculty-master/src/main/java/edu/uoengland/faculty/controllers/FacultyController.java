@@ -1,8 +1,12 @@
 package edu.uoengland.faculty.controllers;
 
 import edu.uoengland.faculty.dto.FacultyDTO;
+import edu.uoengland.faculty.dto.StudentDTO;
+import edu.uoengland.faculty.feignclient.FacultyServiceClient;
 import edu.uoengland.faculty.service.FacultyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +15,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
-
 	
 	@Autowired
 	private FacultyService facultyService;
+	
+	@Autowired
+	private FacultyServiceClient facultyServiceClient;
 	
 	@PostMapping
 	public FacultyDTO saveFaculty(@RequestBody FacultyDTO facultyDTO) {
@@ -48,5 +54,12 @@ public class FacultyController {
 	public String deleteFaculty(@PathVariable UUID id){
 
 		return facultyService.deleteFaculty(id);
+	}
+	
+	@GetMapping("/students")
+	public List<StudentDTO> getAllStudents(){
+
+		ResponseEntity<List<StudentDTO>> studentDTOList = facultyServiceClient.getAllStudents();
+		return studentDTOList.getBody();
 	}
 }

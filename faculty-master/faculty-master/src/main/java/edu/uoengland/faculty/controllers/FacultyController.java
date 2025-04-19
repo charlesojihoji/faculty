@@ -1,8 +1,11 @@
 package edu.uoengland.faculty.controllers;
 
 import edu.uoengland.faculty.dto.FacultyDTO;
+import edu.uoengland.faculty.dto.GradesDTO;
 import edu.uoengland.faculty.dto.StudentDTO;
+import edu.uoengland.faculty.feignclient.FacultyGradeServiceClient;
 import edu.uoengland.faculty.feignclient.FacultyServiceClient;
+//import edu.uoengland.faculty.feignclient.FacultyServiceClient2;
 import edu.uoengland.faculty.service.FacultyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class FacultyController {
 	
 	@Autowired
 	private FacultyServiceClient facultyServiceClient;
+	
+	@Autowired
+	private FacultyGradeServiceClient facultyGradeServiceClient;
 	
 	@PostMapping
 	public FacultyDTO saveFaculty(@RequestBody FacultyDTO facultyDTO) {
@@ -62,4 +68,11 @@ public class FacultyController {
 		ResponseEntity<List<StudentDTO>> studentDTOList = facultyServiceClient.getAllStudents();
 		return studentDTOList.getBody();
 	}
+	
+	@PostMapping("/createGrade")
+	public String facultyAddsAGrade(@RequestBody GradesDTO gradesDTO) {
+		
+		return facultyGradeServiceClient.createAGrade(gradesDTO);
+	}
+	
 }

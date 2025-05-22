@@ -75,4 +75,9 @@ public class FacultyController {
 		return facultyGradeServiceClient.createAGrade(gradesDTO);
 	}
 	
+	@PutMapping("/updateGrade/{gradeId}")
+	public String facultyUpdatesAGrade(@RequestBody GradesDTO gradesDTO, @PathVariable UUID gradeId) {
+		
+		return facultyGradeServiceClient.updateGrade(gradesDTO, gradeId);
+	}
 }

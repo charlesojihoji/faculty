@@ -80,4 +80,16 @@ public class FacultyController {
 		
 		return facultyGradeServiceClient.updateGrade(gradesDTO, gradeId);
 	}
+	
+	@DeleteMapping("/deleteGrade/{gradeId}")
+	public String facultyDeletesAGrade(@PathVariable UUID gradeId) {
+		
+		return facultyGradeServiceClient.deleteGrade(gradeId);
+	}
+	
+	@GetMapping("/getAllGradesForACourse/{course}")
+	public List<String> getAllGradesForACourse(@PathVariable String course){
+		
+		return facultyGradeServiceClient.getAllGradesForACourse(course);
+	}
 }

@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/faculty")
+@CrossOrigin("*")
 public class FacultyController {
 	
 	@Autowired

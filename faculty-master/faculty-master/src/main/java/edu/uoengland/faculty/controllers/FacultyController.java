@@ -93,4 +93,10 @@ public class FacultyController {
 		
 		return facultyGradeServiceClient.getAllGradesForACourse(course);
 	}
+	
+	@PutMapping("/updateGrade/{gradeId}/student/{studentName}")
+	public String facultyUpdatesAStudentsGrade(@RequestBody GradesDTO gradesDTO, @PathVariable UUID gradeId, @PathVariable String studentName) {
+		
+		return facultyGradeServiceClient.facultyUpdatesAStudentsGrade(gradesDTO, gradeId, studentName);
+	}
 }

@@ -27,4 +27,7 @@ public interface FacultyGradeServiceClient {
     
     @GetMapping("grades/studentsGrades/{course}")
     List<String> getAllGradesForACourse(@PathVariable String course);
+
+    @PutMapping("grades/updateGrade/{gradeId}/student/{studentName}")
+	String facultyUpdatesAStudentsGrade(@RequestBody GradesDTO gradesDTO, @PathVariable UUID gradeId, @PathVariable String studentName);
 }

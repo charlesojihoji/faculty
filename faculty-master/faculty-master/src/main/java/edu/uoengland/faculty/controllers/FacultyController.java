@@ -1,10 +1,12 @@
 package edu.uoengland.faculty.controllers;
 
+import edu.uoengland.faculty.dto.CourseDTO;
 import edu.uoengland.faculty.dto.FacultyDTO;
 import edu.uoengland.faculty.dto.GradesDTO;
 import edu.uoengland.faculty.dto.StudentDTO;
+import edu.uoengland.faculty.feignclient.FacultyCoursesServiceClient;
 import edu.uoengland.faculty.feignclient.FacultyGradeServiceClient;
-import edu.uoengland.faculty.feignclient.FacultyServiceClient;
+import edu.uoengland.faculty.feignclient.FacultyStudentsServiceClient;
 //import edu.uoengland.faculty.feignclient.FacultyServiceClient2;
 import edu.uoengland.faculty.service.FacultyService;
 
@@ -24,10 +26,13 @@ public class FacultyController {
 	private FacultyService facultyService;
 	
 	@Autowired
-	private FacultyServiceClient facultyServiceClient;
+	private FacultyStudentsServiceClient facultyServiceClient;
 	
 	@Autowired
 	private FacultyGradeServiceClient facultyGradeServiceClient;
+	
+	@Autowired
+	private FacultyCoursesServiceClient facultyCoursesServiceClient;
 	
 	@PostMapping
 	public FacultyDTO saveFaculty(@RequestBody FacultyDTO facultyDTO) {
@@ -98,5 +103,13 @@ public class FacultyController {
 	public String facultyUpdatesAStudentsGrade(@RequestBody GradesDTO gradesDTO, @PathVariable UUID gradeId, @PathVariable String studentName) {
 		
 		return facultyGradeServiceClient.facultyUpdatesAStudentsGrade(gradesDTO, gradeId, studentName);
+	}
+	
+	@GetMapping("/courses")
+	public List<CourseDTO> getAllCourses(){
+		
+		ResponseEntity<List<CourseDTO>> courseDTOList = facultyCoursesServiceClient.getAllCourses();
+		
+		return courseDTOList.getBody();
 	}
 }

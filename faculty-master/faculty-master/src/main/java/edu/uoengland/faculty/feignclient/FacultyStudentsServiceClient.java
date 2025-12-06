@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(name = "STUDENT-SERVICE", url = "http://localhost:9191")
-public interface FacultyServiceClient {
+public interface FacultyStudentsServiceClient {
 
     @GetMapping("/students")
     ResponseEntity<List<StudentDTO>> getAllStudents();

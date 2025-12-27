@@ -112,4 +112,18 @@ public class FacultyController {
 		
 		return courseDTOList.getBody();
 	}
+	
+	@GetMapping("/courses/{facultyName}")
+	public List<CourseDTO> getAllCoursesForAFacultyMember(@PathVariable String facultyName){
+		
+		ResponseEntity<List<CourseDTO>> courseDTOListForAFacultyMember = facultyCoursesServiceClient.getAllCoursesForAFacultyMember(facultyName);
+		
+		return courseDTOListForAFacultyMember.getBody();
+	}
+	
+	@GetMapping("/{facultyName}/{courseName}")
+	public CourseDTO getDetailsOfACourseForAFacultyMember(@PathVariable String facultyName, @PathVariable String courseName) {
+		
+		return facultyCoursesServiceClient.getDetailsOfACourseFOrAFacultyMember(facultyName, courseName);
+	}
 }
